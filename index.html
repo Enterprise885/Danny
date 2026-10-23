@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Daniel - Frontend & Backend Web Developer. I build all kinds of websites." />
+<title>Daniel | Frontend & Backend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #6c5ce7;
+  --secondary: #00cec9;
+  --accent: #fd79a8;
+  --darker: #050510;
+  --text: #e8e8f0;
+  --muted: #a0a0b8;
+  --card: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--darker);
+  color: var(--text);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Animated Background Blobs */
+.bg-blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.35; animation: float 20s infinite ease-in-out; }
+.blob1 { width: 400px; height: 400px; background: var(--primary); top: -100px; left: -100px; }
+.blob2 { width: 350px; height: 350px; background: var(--secondary); bottom: -100px; right: -100px; animation-delay: -7s; }
+.blob3 { width: 300px; height: 300px; background: var(--accent); top: 50%; left: 50%; animation-delay: -14s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, -60px) scale(1.1); }
+  66% { transform: translate(-60px, 60px) scale(0.95); }
+}
+
+/* Navbar */
+.navbar {
+  position: fixed; top: 0; width: 100%; padding: 1.2rem 6%;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(5, 5, 16, 0.7); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border); z-index: 1000;
+}
+.logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 2px; }
+.logo span { color: var(--secondary); }
+.nav-links { display: flex; list-style: none; gap: 2.2rem; }
+.nav-links a { color: var(--muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: all 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -6px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.3s; }
+.nav-links a:hover, .nav-links a.active { color: var(--text); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.menu-btn { display: none; font-size: 1.6rem; cursor: pointer; color: var(--text); }
+
+/* Hero */
+.hero { min-height: 100vh; display: flex; align-items: center; justify-content: space-between; padding: 8rem 6% 4rem; gap: 3rem; }
+.hero-content { flex: 1; max-width: 600px; }
+.greeting { color: var(--secondary); font-weight: 500; margin-bottom: 0.8rem; animation: fadeUp 0.8s ease; }
+.name {
+  font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1;
+  background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
+  background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; animation: gradientShift 5s ease infinite, fadeUp 0.8s ease 0.1s backwards;
+}
+@keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+.role { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--text); margin: 0.5rem 0 1.2rem; font-weight: 600; animation: fadeUp 0.8s ease 0.2s backwards; }
+.tagline { color: var(--muted); font-size: 1.05rem; margin-bottom: 2rem; animation: fadeUp 0.8s ease 0.3s backwards; }
+.highlight { color: var(--secondary); font-weight: 600; }
+.hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; animation: fadeUp 0.8s ease 0.4s backwards; }
+
+.btn {
+  padding: 0.85rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 600;
+  font-size: 0.95rem; transition: all 0.3s; border: none; cursor: pointer;
+  display: inline-block; font-family: inherit;
+}
+.btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; box-shadow: 0 8px 24px rgba(108, 92, 231, 0.4); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(108, 92, 231, 0.6); }
+.btn-secondary { background: transparent; color: var(--text); border: 2px solid var(--border); }
+.btn-secondary:hover { border-color: var(--secondary); color: var(--secondary); transform: translateY(-3px); }
+.btn.full { width: 100%; }
+
+.social-links { display: flex; gap: 1rem; animation: fadeUp 0.8s ease 0.5s backwards; }
+.social {
+  width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; border: 1px solid var(--border); background: var(--card);
+  color: var(--text); transition: all 0.3s;
+}
+.social:hover { transform: translateY(-4px) scale(1.1); }
+.social.wa:hover { background: #25D366; border-color: #25D366; color: #fff; }
+.social.gmail:hover { background: #EA4335; border-color: #EA4335; color: #fff; }
+
+.hero-visual { flex: 1; display: flex; justify-content: center; }
+.code-card {
+  width: 100%; max-width: 440px; background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+  backdrop-filter: blur(20px); box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  animation: floatCard 6s ease-in-out infinite;
+}
+@keyframes floatCard { 0%, 100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-20px) rotate(1deg); } }
+.code-header { display: flex; align-items: center; gap: 8px; padding: 0.8rem 1rem; background: rgba(0, 0, 0, 0.3); border-bottom: 1px solid var(--border); }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+.filename { margin-left: auto; color: var(--muted); font-size: 0.8rem; font-family: 'Courier New', monospace; }
+pre { padding: 1.5rem; font-family: 'Courier New', monospace; font-size: 0.9rem; line-height: 1.8; overflow-x: auto; }
+.kw { color: #c792ea; } .str { color: #c3e88d; }
+
+/* Sections */
+.section { padding: 6rem 6%; max-width: 1200px; margin: 0 auto; }
+.section-title { text-align: center; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; margin-bottom: 3rem; }
+.section-title span { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* About */
+.about-text p { color: var(--muted); font-size: 1.05rem; margin-bottom: 1.2rem; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto; }
+.about-text strong { color: var(--secondary); }
+.stats { display: flex; justify-content: center; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap; }
+.stat { text-align: center; padding: 1.5rem 2rem; background: var(--card); border: 1px solid var(--border); border-radius: 16px; min-width: 140px; transition: all 0.3s; }
+.stat:hover { transform: translateY(-6px); border-color: var(--secondary); }
+.stat h3 { font-size: 2rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat p { color: var(--muted); font-size: 0.9rem; }
+
+/* Skills / Services */
+.skills-grid, .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+.skill-card, .service-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 2rem 1.5rem; text-align: center; transition: all 0.4s; backdrop-filter: blur(10px);
+}
+.skill-card:hover, .service-card:hover { transform: translateY(-8px); border-color: var(--secondary); box-shadow: 0 20px 40px rgba(0, 206, 201, 0.15); }
+.skill-icon, .service-icon { font-size: 2.5rem; margin-bottom: 1rem; display: inline-block; transition: transform 0.3s; }
+.skill-card:hover .skill-icon, .service-card:hover .service-icon { transform: scale(1.2) rotate(8deg); }
+.skill-card h3, .service-card h3 { font-size: 1.2rem; margin-bottom: 0.6rem; }
+.skill-card p, .service-card p { color: var(--muted); font-size: 0.92rem; }
+
+/* Contact */
+.contact-subtitle { text-align: center; color: var(--muted); margin-top: -1.5rem; margin-bottom: 3rem; }
+.contact-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+.contact-form, .direct-contact { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); }
+.contact-form h3, .direct-contact h3 { margin-bottom: 1.5rem; font-size: 1.3rem; }
+.form-group { margin-bottom: 1rem; }
+input, textarea {
+  width: 100%; padding: 0.9rem 1rem; background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+  font-family: inherit; font-size: 0.95rem; transition: all 0.3s; resize: vertical;
+}
+input:focus, textarea:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(0, 206, 201, 0.15); }
+.form-status { margin-top: 1rem; text-align: center; font-size: 0.9rem; min-height: 1.2rem; }
+
+.contact-link {
+  display: flex; align-items: center; gap: 1rem; padding: 1rem; margin-bottom: 1rem;
+  background: rgba(0, 0, 0, 0.25); border: 1px solid var(--border); border-radius: 12px;
+  text-decoration: none; color: var(--text); transition: all 0.3s;
+}
+.contact-link:hover { transform: translateX(6px); border-color: var(--secondary); }
+.contact-icon { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.contact-icon.wa { background: #25D366; color: #fff; }
+.contact-icon.gmail { background: #EA4335; color: #fff; }
+.contact-label { display: block; font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.contact-value { font-weight: 600; font-size: 0.95rem; word-break: break-all; }
+
+.availability {
+  display: flex; align-items: center; gap: 0.6rem; margin-top: 1.5rem;
+  padding: 0.8rem 1rem; background: rgba(39, 201, 63, 0.1);
+  border: 1px solid rgba(39, 201, 63, 0.3); border-radius: 10px;
+  color: #27c93f; font-weight: 500; font-size: 0.9rem;
+}
+.pulse-dot { width: 10px; height: 10px; border-radius: 50%; background: #27c93f; position: relative; }
+.pulse-dot::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: #27c93f; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(2.5); opacity: 0; } }
+
+/* Footer */
+footer { text-align: center; padding: 2rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.9rem; }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero { flex-direction: column; text-align: center; padding-top: 7rem; }
+  .hero-buttons, .social-links { justify-content: center; }
+  .contact-container { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .nav-links {
+    position: fixed; top: 70px; right: -100%; flex-direction: column;
+    background: rgba(5, 5, 16, 0.98); backdrop-filter: blur(20px);
+    width: 70%; height: calc(100vh - 70px); padding: 2rem;
+    transition: right 0.4s ease; border-left: 1px solid var(--border);
+  }
+  .nav-links.active { right: 0; }
+  .menu-btn { display: block; }
+  .stats { gap: 1rem; }
+  .stat { padding: 1rem 1.2rem; min-width: 110px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-blobs">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+</div>
+
+<nav class="navbar">
+  <div class="logo">DANIEL<span>.</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home" class="active">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="menu-btn" id="menuBtn">☰</div>
+</nav>
+
+<section id="home" class="hero">
+  <div class="hero-content">
+    <p class="greeting">👋 Hello, I'm</p>
+    <h1 class="name">Daniel</h1>
+    <h2 class="role">Frontend & Backend Developer</h2>
+    <p class="tagline">
+      I design and build <span class="highlight">all kinds of websites</span> — fast, modern, and beautiful.
+    </p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn btn-primary">Hire Me</a>
+      <a href="#services" class="btn btn-secondary">My Services</a>
+    </div>
+    <div class="social-links">
+      <a href="https://wa.me/2348156189454?text=Hi%20Daniel,%20I%20saw%20your%20portfolio!" target="_blank" class="social wa" title="WhatsApp">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="mailto:danielkingakpiri@gmail.com" class="social gmail" title="Gmail">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2v.01L12 13 4 6.01V6h16zM4 18V8l8 6 8-6v10H4z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="code-card">
+      <div class="code-header">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="filename">daniel.js</span>
+      </div>
+      <pre><code><span class="kw">const</span> daniel = {
+  role: <span class="str">"Full-Stack Dev"</span>,
+  skills: [<span class="str">"HTML"</span>, <span class="str">"CSS"</span>, <span class="str">"JS"</span>,
+           <span class="str">"Node"</span>, <span class="str">"React"</span>],
+  builds: <span class="str">"All kinds of websites"</span>,
+  available: <span class="kw">true</span>
+};</code></pre>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <h2 class="section-title">About <span>Me</span></h2>
+  <div class="about-content reveal">
+    <div class="about-text">
+      <p>I'm <strong>Daniel</strong>, a passionate <strong>Frontend & Backend Developer</strong> who loves turning ideas into functional, beautiful websites.</p>
+      <p>Whether it's a business site, an e-commerce store, a blog, a landing page, or a full web application — <strong>I create all sorts of websites</strong> with clean code, modern design, and smooth user experiences.</p>
+      <div class="stats">
+        <div class="stat"><h3>50+</h3><p>Projects</p></div>
+        <div class="stat"><h3>100%</h3><p>Dedication</p></div>
+        <div class="stat"><h3>24/7</h3><p>Support</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="section">
+  <h2 class="section-title">My <span>Skills</span></h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🎨</div>
+      <h3>Frontend</h3>
+      <p>HTML5, CSS3, JavaScript, React, Responsive Design, Animations</p>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">⚙️</div>
+      <h3>Backend</h3>
+      <p>Node.js, Express, REST APIs, Authentication, Databases</p>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🗄️</div>
+      <h3>Databases</h3>
+      <p>MongoDB, MySQL, SQLite, Firebase</p>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🚀</div>
+      <h3>Tools</h3>
+      <p>Git, GitHub, VS Code, Figma, Deployment</p>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="section">
+  <h2 class="section-title">What I <span>Do</span></h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🌐</div>
+      <h3>Business Websites</h3>
+      <p>Professional sites that grow your brand and attract customers.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🛒</div>
+      <h3>E-Commerce</h3>
+      <p>Online stores with product pages, cart, and secure checkout.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📱</div>
+      <h3>Portfolio Sites</h3>
+      <p>Showcase your work with a stunning personal portfolio.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💡</div>
+      <h3>Landing Pages</h3>
+      <p>High-converting pages for products, campaigns, or events.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📝</div>
+      <h3>Blogs & CMS</h3>
+      <p>Dynamic content platforms you can easily manage yourself.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔧</div>
+      <h3>Custom Web Apps</h3>
+      <p>Full-stack applications tailored to your business needs.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <h2 class="section-title">Get In <span>Touch</span></h2>
+  <p class="contact-subtitle">Have a project in mind? Let's build something amazing together.</p>
+
+  <div class="contact-container">
+    <form class="contact-form reveal" id="contactForm">
+      <h3>Send me a message</h3>
+      <div class="form-group">
+        <input type="text" id="name" placeholder="Your Name" required />
+      </div>
+      <div class="form-group">
+        <input type="email" id="email" placeholder="Your Email" required />
+      </div>
+      <div class="form-group">
+        <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary full">Send Message</button>
+      <p class="form-status" id="formStatus"></p>
+    </form>
+
+    <div class="direct-contact reveal">
+      <h3>Or reach me directly</h3>
+
+      <a href="https://wa.me/2348156189454?text=Hi%20Daniel,%20I'd%20like%20to%20discuss%20a%20project." target="_blank" class="contact-link">
+        <div class="contact-icon wa">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div>
+          <span class="contact-label">WhatsApp</span>
+          <span class="contact-value">08156189454</span>
+        </div>
+      </a>
+
+      <a href="mailto:danielkingakpiri@gmail.com?subject=Project%20Inquiry&body=Hi%20Daniel,%20I'd%20like%20to%20discuss%20a%20project." class="contact-link">
+        <div class="contact-icon gmail">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2v.01L12 13 4 6.01V6h16zM4 18V8l8 6 8-6v10H4z"/></svg>
+        </div>
+        <div>
+          <span class="contact-label">Email</span>
+          <span class="contact-value">danielkingakpiri@gmail.com</span>
+        </div>
+      </a>
+
+      <div class="availability">
+        <span class="pulse-dot"></span> Available for new projects
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© <span id="year"></span> Daniel — Frontend & Backend Developer. Built with ❤️</p>
+</footer>
+
+<script>
+// Mobile menu
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.getElementById('navLinks');
+menuBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+  menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+});
+document.querySelectorAll('.nav-links a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+    menuBtn.textContent = '☰';
+  });
+});
+
+// Active nav on scroll
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY + 120;
+  sections.forEach(sec => {
+    const top = sec.offsetTop;
+    const height = sec.offsetHeight;
+    const id = sec.getAttribute('id');
+    const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if (link) {
+      if (scrollY >= top && scrollY < top + height) {
+        document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    }
+  });
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Contact form — opens WhatsApp with message pre-filled
+const form = document.getElementById('contactForm');
+const status = document.getElementById('formStatus');
+const WHATSAPP_NUMBER = '2348156189454';
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const message = document.getElementById('message').value.trim();
+
+  if (!name || !email || !message) {
+    status.style.color = '#ff5f56';
+    status.textContent = 'Please fill in all fields.';
+    return;
+  }
+
+  status.style.color = '#00cec9';
+  status.textContent = 'Opening WhatsApp...';
+
+  const waText = encodeURIComponent(
+    `Hi Daniel! 👋\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+  );
+
+  setTimeout(() => {
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`, '_blank');
+    status.style.color = '#27c93f';
+    status.textContent = '✅ WhatsApp opened! You can also email me directly.';
+    form.reset();
+  }, 600);
+});
+
+// Footer year
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
